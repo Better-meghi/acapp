@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 
 def index(request):
-    return HttpResponse(" 我的第一个网页 ！！！ ")
-
-
+    line1 = '<h1 style="text-align:center;font-size:200%;">术士之战</h1>'
+    line2 = '<img src="https://img0.baidu.com/it/u=2857096089,2095994689&fm=253&fmt=auto&app=138&f=JPEG?w=1070&h=500" width = 1400>'
+    return HttpResponse(line1 + line2)
 
