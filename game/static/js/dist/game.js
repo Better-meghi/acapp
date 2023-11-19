@@ -65,11 +65,12 @@ class AcGamePlayground{
     }
 
     show(){ //打开playground界面
-        this.$palyground.show();
+        this.$playground.show();
+        
     }
 
     hide(){ //关闭playground界面
-        this.$palyground.hide();
+        this.$playground.hide();
     }
 }
 
