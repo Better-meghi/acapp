@@ -91,6 +91,19 @@ class Player extends AcGameObject{
         this.damage_x = Math.cos(angle);
         this.damage_y = Math.sin(angle);
         this.damage_speed = damage*100;
+        this.speed *= 0.9;  //血条变少后，移动速度也会变慢
+
+        for(let i = 0;i < 10 + Math.random() * 5;i ++){
+            let x = this.x;
+            let y = this.y;
+            let radius = this.radius * Math.random() * 0.1;
+            let angle = Math.PI * 2 * Math.random();
+            let vx = Math.cos(angle);
+            let vy = Math.sin(angle);
+            let color = this.color;
+            let speed = this.speed * 10;
+            new Particle(this.playground, x, y, radius, vx, vy, color, speed);
+        }
     }
 
     update(){
@@ -99,7 +112,7 @@ class Player extends AcGameObject{
             this.move_length = 0;
             this.x += this.damage_x * this.damage_speed * this.timedelta / 1000;
             this.y += this.damage_y * this.damage_speed * this.timedelta / 1000;
-            this.damage_speed *= this.friction; 
+            this.damage_speed *= this.friction;
         } else {
             if(this.move_length < this.eps) {
                 this.move_length = 0;

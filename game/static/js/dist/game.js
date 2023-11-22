@@ -125,6 +125,42 @@ class GameMap extends AcGameObject{
 }
 
 
+class Particle extends AcGameObject {
+    constructor(playground,x, y, radius, vx, vy, color, speed) {
+        super();
+        this.playground =this.playground;
+        this.ctx = this.playground.game_map.ctx;
+        this.x = x;
+        this.y = y;
+        this.vx = vx;
+        this.vy = vy;
+        this.color = color;
+        this.speed = speed;
+        this.friction = 0.9;
+        this.eps = 1;
+    }
+
+    start(){
+    }
+
+    update(){
+        if(this.speed < this.eps){
+            this.destroy();
+            return false;
+        }
+        this.x += this.vx * this.speed * this.timedelta / 1000;
+        this.y += this.vy * this.speed * this.timedelta / 1000;
+        this.speed *= this.friction;
+        this.render();
+    }
+
+    render(){
+        this.ctx.beginPath();
+        this.ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+        this.ctx.fillStyle = this.color;
+        this.ctx.fill();
+    }
+}
 class Player extends AcGameObject{
     constructor(playground, x, y, radius, color, speed, is_me){
         super();
@@ -218,6 +254,19 @@ class Player extends AcGameObject{
         this.damage_x = Math.cos(angle);
         this.damage_y = Math.sin(angle);
         this.damage_speed = damage*100;
+        this.speed *= 0.9;  //血条变少后，移动速度也会变慢
+
+        for(let i = 0;i < 10 + Math.random() * 5;i ++){
+            let x = this.x;
+            let y = this.y;
+            let radius = this.radius * Math.random() * 0.1;
+            let angle = Math.PI * 2 * Math.random();
+            let vx = Math.cos(angle);
+            let vy = Math.sin(angle);
+            let color = this.color;
+            let speed = this.speed * 10;
+            new Particle(this.playground, x, y, radius, vx, vy, color, speed);
+        }
     }
 
     update(){
@@ -226,7 +275,7 @@ class Player extends AcGameObject{
             this.move_length = 0;
             this.x += this.damage_x * this.damage_speed * this.timedelta / 1000;
             this.y += this.damage_y * this.damage_speed * this.timedelta / 1000;
-            this.damage_speed *= this.friction; 
+            this.damage_speed *= this.friction;
         } else {
             if(this.move_length < this.eps) {
                 this.move_length = 0;
