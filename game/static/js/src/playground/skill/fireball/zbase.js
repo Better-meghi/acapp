@@ -25,12 +25,12 @@ class FireBall extends AcGameObject {
         if(this.move_length < this.eps){
             this.destroy();
             return false;
-        } else {
-            let moved = Math.min(this.move_length, this.speed * this.timedelta / 1000);
-            this.x += moved * this.vx;
-            this.y += moved * this.vy;
-            this.move_length -= moved;
         }
+        let moved = Math.min(this.move_length, this.speed * this.timedelta / 1000);
+        this.x += moved * this.vx;
+        this.y += moved * this.vy;
+        this.move_length -= moved;
+        
 
         for(let i = 0; i < this.playground.players.length; i ++){
             let player = this.playground.players[i];
@@ -38,6 +38,7 @@ class FireBall extends AcGameObject {
                 this.attack(player);
             }
         }
+
         this.render();
     }
 

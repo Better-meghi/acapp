@@ -18,7 +18,7 @@ class Player extends AcGameObject{
         this.damage_x = 0;
         this.damage_y = 0;
         this.damage_speed = 0;
-        this.friction = 0.9;
+        this.friction = 0.8;
     }
 
     start(){
@@ -49,7 +49,8 @@ class Player extends AcGameObject{
 
         $(window).keydown(function(e){
             if(e.which === 81){ //q键发火球
-                outer.cur_skill = "fireball";
+                outer.cur_skill = "fireball"
+
                 return false;
             }
         });
@@ -89,35 +90,34 @@ class Player extends AcGameObject{
         }
         this.damage_x = Math.cos(angle);
         this.damage_y = Math.sin(angle);
-        this.damage_speed = damage * 100;
+        this.damage_speed = damage*100;
     }
 
     update(){
-        if(this.damage_speed > this.eps){
+        if(this.damage_speed > this.eps) {
             this.vx = this.vy = 0;
             this.move_length = 0;
-            this.x += this.damage_x * this.damage_speed * this.timedetla / 1000;
-            this.y += this.damage_y * this.damage_speed * this.timedetla / 1000;
-            this.damage_speed *= this.friction;
-        }else{
-            if(this.move_length < this.eps){
+            this.x += this.damage_x * this.damage_speed * this.timedelta / 1000;
+            this.y += this.damage_y * this.damage_speed * this.timedelta / 1000;
+            this.damage_speed *= this.friction; 
+        } else {
+            if(this.move_length < this.eps) {
                 this.move_length = 0;
                 this.vx = this.vy = 0;
-                if(!this.is_me){
+                if(!this.is_me) {
                     let tx = Math.random() * this.playground.width;
                     let ty = Math.random() * this.playground.height;
                     this.move_to(tx, ty);
-                }
-            }else {
-                let moved = Math.min(this.move_length, this.speed * this.timedelta / 1000);
-                this.x += this.vx * moved;
-                this.y += this.vy * moved;
-                this.move_length -= moved;
             }
+        } else {
+            let moved = Math.min(this.move_length, this.speed * this.timedelta / 1000);
+            this.x += this.vx * moved;
+            this.y += this.vy * moved;
+            this.move_length -= moved;
         }
-
-        this.render();
     }
+        this.render();
+}
 
     render(){
         this.ctx.beginPath();
