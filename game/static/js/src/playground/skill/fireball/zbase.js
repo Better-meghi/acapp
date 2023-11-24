@@ -30,7 +30,6 @@ class FireBall extends AcGameObject {
         this.x += moved * this.vx;
         this.y += moved * this.vy;
         this.move_length -= moved;
-        
 
         for(let i = 0; i < this.playground.players.length; i ++){
             let player = this.playground.players[i];
@@ -57,7 +56,9 @@ class FireBall extends AcGameObject {
 
     attack(player){
         let angle = Math.atan2(player.y - this.y, player.x - this.x)
+
         player.is_attacked(angle, this.damage);
+
         this.destroy();
     }
 
